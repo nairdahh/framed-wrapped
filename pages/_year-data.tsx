@@ -258,7 +258,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
         <main className="relative">
           <div className="relative z-10 bg-framed-black/60">
             <Container className="pt-20 md:pt-0">
-              <div className="min-h-screen md:flex md:items-center load transition-all -translate-y-10 opacity-0 duration-500 mb-8">
+              <div className="min-h-screen md:flex md:items-center load transition-all -translate-y-10 opacity-0 duration-1000 mb-8">
                 <div className="md:grid md:grid-cols-2 md:gap-x-16">
                   <div className="flex flex-col justify-center">
                     <img src={`${basePath}/recap-wsub-logo.svg`} style={ recapLogoStyle } alt="recap logo"/>
@@ -275,7 +275,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                         return (
                           <a
                             key={`${item.author}-${index}`}
-                            className="relative aspect-square overflow-hidden"
+                            className="relative aspect-square overflow-hidden load transition-all -translate-y-10 opacity-0 duration-1000"
                             href= { getHOFUrl(item) }
                             target="_blank"
                             rel="noreferrer"
@@ -297,9 +297,12 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                             <picture>
                               <img
                                 loading="lazy"
-                                className="load transition-all -translate-y-10 opacity-0 duration-500 rounded-md object-cover w-full h-full aspect-square"
+                                className="rounded-md object-cover w-full h-full aspect-square"
                                 alt={item.gameName}
-                                src={item.thumbnailUrl}
+                                src={`${item.thumbnailUrl?.replace(
+                                  "https://cdn.discordapp.com",
+                                  "https://media.discordapp.net",
+                                )}?width=600&height=600`}
                                 //src={ index === 0 ? item.shotUrl : item.thumbnailUrl}
                               />
                             </picture>
@@ -310,14 +313,14 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                   </div>
                 </div>
               </div>
-              <div className="min-h-screen flex flex-col justify-center load transition-all -translate-y-10 opacity-0 duration-500 mb-8">
+              <div className="min-h-screen flex flex-col justify-center load transition-all -translate-y-10 opacity-0 duration-1000 mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16">
                   <div className="hidden md:grid grid-cols-3" style = { imageShadowStyle }>
                     {categoriesImages.map((item, index) => {
                       return (
                         <a
                           key={`${item.author}-${index}`}
-                          className="relative overflow-hidden aspect-auto"
+                          className="relative overflow-hidden aspect-auto load transition-all -translate-y-10 opacity-0 duration-1000"
                           href= { getHOFUrl(item) }
                           target="_blank"
                           rel="noreferrer"
@@ -340,7 +343,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                             <img
                               loading="lazy"
                               className={`
-                            load transition-all -translate-y-10 opacity-0 duration-500 object-cover h-full
+                            object-cover h-full
                             ${
                               index === 0
                                 ? "rounded-tl-md rounded-bl-md"
@@ -387,7 +390,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                 </div>
               </div>
               <div
-                className="min-h-screen flex items-center load transition-all -translate-y-10 opacity-0 duration-500 mb-8"
+                className="min-h-screen flex items-center load transition-all -translate-y-10 opacity-0 duration-1000 mb-8"
                 ref={segments["Top 10 Games in Share Your Shot"]}
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16">
@@ -435,7 +438,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                           <a
                             key={`${item.author}-${index}`}
                             className={`
-                            relative load transition-all -translate-y-10 opacity-0 duration-500
+                            relative load transition-all -translate-y-10 opacity-0 duration-1000
                             ${index === 0 ? "col-span-1 row-span-2" : ""}
                           `}
                             href= { getHOFUrl(item) }
@@ -467,7 +470,10 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                                 loading="lazy"
                                 className="rounded-md object-cover w-full h-full aspect-square"
                                 alt={item.gameName}
-                                src={item.thumbnailUrl}
+                                src={`${item.thumbnailUrl?.replace(
+                                  "https://cdn.discordapp.com",
+                                  "https://media.discordapp.net",
+                                )}?width=600&height=600`}
                                 //src={ index === 0 ? item.shotUrl : item.thumbnailUrl}
                               />
                             </picture>
@@ -479,7 +485,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                 </div>
               </div>
               <div
-                className="min-h-screen flex items-center load transition-all -translate-y-10 opacity-0 duration-500 mb-8"
+                className="min-h-screen flex items-center load transition-all -translate-y-10 opacity-0 duration-1000 mb-8"
                 ref={segments["Top 10 Games in the Hall of Framed"]}
               >
                 <div className="grid md:grid-rows-none md:grid-cols-2 gap-x-16">
@@ -490,7 +496,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                           <a
                             key={`${item.author}-${index}`}
                             className={`
-                            relative load transition-all -translate-y-10 opacity-0 duration-500
+                            relative load transition-all -translate-y-10 opacity-0 duration-1000
                             ${index === 0 ? "col-span-1 row-span-2" : ""}
                           `}
                             href= { getHOFUrl(item) }
@@ -522,7 +528,10 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                                 loading="lazy"
                                 className="rounded-md object-cover w-full h-full aspect-square"
                                 alt={item.gameName}
-                                src={item.thumbnailUrl}
+                                src={`${item.thumbnailUrl?.replace(
+                                  "https://cdn.discordapp.com",
+                                  "https://media.discordapp.net",
+                                )}?width=600&height=600`}
                                 //src={ index === 0 ? item.shotUrl : item.thumbnailUrl}
                               />
                             </picture>
@@ -567,7 +576,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                 </div>
               </div>
               <div
-                className="min-h-screen flex items-center load transition-all -translate-y-10 opacity-0 duration-500 mb-16"
+                className="min-h-screen flex items-center load transition-all -translate-y-10 opacity-0 duration-1000 mb-16"
                 ref={segments["Most Active Day in Share Your Shot"]}
               >
                 <div className="grid grid-rows-2 md:grid-rows-none md:grid-cols-2 gap-x-16">
@@ -619,7 +628,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                           <a
                             key={`${item.author}-${index}`}
                             className={`
-                            relative load transition-all -translate-y-10 opacity-0 duration-500
+                            relative load transition-all -translate-y-10 opacity-0 duration-1000
                             ${index === 0 ? "col-span-1 row-span-2" : ""}
                           `}
                             href= { getHOFUrl(item) }
@@ -651,7 +660,10 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                                 loading="lazy"
                                 className="rounded-md object-cover w-full h-full aspect-square"
                                 alt={item.gameName}
-                                src={item.thumbnailUrl}
+                                src={`${item.thumbnailUrl?.replace(
+                                  "https://cdn.discordapp.com",
+                                  "https://media.discordapp.net",
+                                )}?width=600&height=600`}
                                 //src={ index === 0 ? item.shotUrl : item.thumbnailUrl}
                               />
                             </picture>
@@ -663,7 +675,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                 </div>
               </div>
               <div
-                className="min-h-screen flex items-center load transition-all -translate-y-10 opacity-0 duration-500 mb-16 md:mb-0"
+                className="min-h-screen flex items-center load transition-all -translate-y-10 opacity-0 duration-1000 mb-16 md:mb-0"
                 ref={segments["Most Active Day in the Hall of Framed"]}
               >
                 <div className="grid grid-rows-2 md:grid-rows-none md:grid-cols-2 gap-x-16">
@@ -674,7 +686,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                           <a
                             key={`${item.author}-${index}`}
                             className={`
-                            relative load transition-all -translate-y-10 opacity-0 duration-500
+                            relative load transition-all -translate-y-10 opacity-0 duration-1000
                             ${index === 0 ? "col-span-1 row-span-2" : ""}
                           `}
                             href= { getHOFUrl(item) }
@@ -706,7 +718,10 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                                 loading="lazy"
                                 className="rounded-md object-cover w-full h-full aspect-square"
                                 alt={item.gameName}
-                                src={item.thumbnailUrl}
+                                src={`${item.thumbnailUrl?.replace(
+                                  "https://cdn.discordapp.com",
+                                  "https://media.discordapp.net",
+                                )}?width=600&height=600`}
                                 //src={ index === 0 ? item.shotUrl : item.thumbnailUrl}
                               />
                             </picture>
@@ -760,7 +775,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
               </div>
 
               <div
-                className="min-h-screen flex items-center load transition-all -translate-y-10 opacity-0 duration-500 mb-8"
+                className="min-h-screen flex items-center load transition-all -translate-y-10 opacity-0 duration-1000 mb-8"
                 ref={segments["Guess the VP yearly leadboard"]}
                 style={ {display: leaderboardData.length === 0 ? 'none' : 'block'} }
               >
