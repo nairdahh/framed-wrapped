@@ -792,7 +792,70 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                     </h2>
                     <p className="max-w-3xl mx-auto">Every year, the community rallies around exceptional shots that capture the essence of virtual photography. These are the most celebrated shots of {year}, earning the highest number of votes from our members.</p>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="md:hidden flex flex-col gap-6">
+                    {top3Shots.map((item, index) => {
+                      const medalColors = [
+                        "text-yellow-400",
+                        "text-gray-300",
+                        "text-amber-600"
+                      ];
+                      const medalEmojis = ["🥇", "🥈", "🥉"];
+
+                      return (
+                        <a
+                          key={`mobile-${item.author}-${item.epochTime}`}
+                          className="block w-full load transition-all -translate-y-10 opacity-0 duration-1000"
+                          href={getHOFUrl(item)}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <div
+                            className="relative rounded-lg overflow-hidden"
+                            style={{
+                              filter: 'drop-shadow(0px 5px 15px #00000077)',
+                            }}
+                          >
+                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 via-black/60 to-transparent z-20">
+                              <div className="flex items-start justify-between">
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <span className={`text-3xl ${medalColors[index]}`}>
+                                      {medalEmojis[index]}
+                                    </span>
+                                    <div>
+                                      <p className="text-xl font-bold text-white leading-none">
+                                        {item.score}
+                                      </p>
+                                      <p className="text-white/60 text-xs font-medium">
+                                        votes
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <p className="text-framed-white font-semibold text-base mb-1">
+                                    {item.gameName}
+                                  </p>
+                                  <p className="text-white/75 text-xs">
+                                    by {item.author}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            <picture>
+                              <img
+                                loading="lazy"
+                                className="rounded-lg w-full h-auto"
+                                alt={item.gameName}
+                                src={`${item.thumbnailUrl}?width=800`}
+                              />
+                            </picture>
+                          </div>
+                        </a>
+                      );
+                    })}
+                  </div>
+
+                  {/* Desktop Layout - original 3-column grid with hover effects */}
+                  <div className="hidden md:grid md:grid-cols-3 gap-8">
                     {top3Shots.map((item, index) => {
                       const medalColors = [
                         "text-yellow-400",
