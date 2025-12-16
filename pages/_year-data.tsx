@@ -124,6 +124,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
     "Top 10 Games in the Hall of Framed": useRef<HTMLDivElement>(null),
     "Most Active Day in Share Your Shot": useRef<HTMLDivElement>(null),
     "Most Active Day in the Hall of Framed": useRef<HTMLDivElement>(null),
+    "Top 3 Shots of the Year": useRef<HTMLDivElement>(null),
     "Daily Share Your Shot": useRef<HTMLDivElement>(null),
     "Daily Hall of Framed": useRef<HTMLDivElement>(null),
     "Guess the VP yearly leadboard": useRef<HTMLDivElement>(null),
@@ -209,6 +210,12 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
       return { ...gameList[randIdx], ...item };
     })
     .filter((item) => !!item.thumbnailUrl);
+
+      const top3Shots = data.hof
+    .filter((shot) => !!shot.thumbnailUrl && !!shot.score)
+    .sort((a, b) => (b.score || 0) - (a.score || 0))
+    .slice(0, 3);
+
 
   const leaderboardData: LeaderboardEntry[] = guessTheVPData
   .map(([authorId, score]: [string, number]) => {
@@ -770,6 +777,131 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                         )}
                       />
                     </div>
+                  </div>
+                </div>
+              </div>
+
+                 <div
+                className="min-h-screen flex items-center load transition-all -translate-y-10 opacity-0 duration-1000 mb-16"
+                ref={segments["Top 3 Shots of the Year"]}
+              >
+                <div className="w-full">
+                  <div className="text-center mb-12">
+                    <h2 className="md:text-6xl text-3xl font-semibold mb-8">
+                      Top 3 Shots of the Year
+                    </h2>
+                    <p className="max-w-3xl mx-auto">Every year, the community rallies around exceptional shots that capture the essence of virtual photography. These are the most celebrated shots of {year}, earning the highest number of votes from our members.</p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {top3Shots.map((item, index) => {
+                      const medalColors = [
+                        "text-yellow-400",
+                        "text-gray-300",
+                        "text-amber-600"
+                      ];
+                      const medalEmojis = ["🥇", "🥈", "🥉"];
+                      const orderClass = index === 0 ? "md:order-2" : index === 1 ? "md:order-1" : "md:order-3";
+                      const marginStyle = index === 0 ? {} : index === 1 ? {marginTop: '4rem'} : {marginTop: '6rem'};
+
+                      const imageAspectRatio = item.width && item.height ? item.width / item.height : 16/9;
+                      const croppedAspectRatio = 3/4;
+                      const baseHeight = 600;
+                      const croppedWidth = baseHeight * croppedAspectRatio;
+
+                      const isLandscape = imageAspectRatio > croppedAspectRatio;
+                      const fullWidth = isLandscape ? baseHeight * imageAspectRatio : croppedWidth;
+                      const fullHeight = isLandscape ? baseHeight : croppedWidth / imageAspectRatio;
+
+                      return (
+                        <div
+                          key={`${item.author}-${item.epochTime}`}
+                          className={`relative ${orderClass}`}
+                          style={{
+                            ...marginStyle,
+                            width: `${croppedWidth}px`,
+                            height: `${baseHeight}px`,
+                            zIndex: 0,
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.zIndex = '50';
+                          }}
+                          onMouseLeave={(e) => {
+                            const target = e.currentTarget;
+                            setTimeout(() => {
+                              if (target && target.style) {
+                                target.style.zIndex = '0';
+                              }
+                            }, 500);
+                          }}
+                        >
+                          <a
+                            className="block absolute overflow-visible load transition-all -translate-y-10 opacity-0 duration-1000 group"
+                            href={getHOFUrl(item)}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{
+                              left: '50%',
+                              top: '50%',
+                              transform: 'translate(-50%, -50%)',
+                            }}
+                          >
+                            <div
+                              className="relative rounded-lg overflow-hidden transition-all duration-500"
+                              style={{
+                                height: `${baseHeight}px`,
+                                width: `${croppedWidth}px`,
+                                filter: 'drop-shadow(0px 5px 5px #00000077)',
+                                transition: 'width 0.5s ease-in-out, height 0.5s ease-in-out, filter 0.5s ease-in-out',
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.width = `${fullWidth}px`;
+                                e.currentTarget.style.height = `${fullHeight}px`;
+                                e.currentTarget.style.filter = 'drop-shadow(0px 20px 40px #000000cc)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.width = `${croppedWidth}px`;
+                                e.currentTarget.style.height = `${baseHeight}px`;
+                                e.currentTarget.style.filter = 'drop-shadow(0px 5px 5px #00000077)';
+                              }}
+                            >
+                              <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-black/90 via-black/60 to-transparent z-20">
+                                <div className="flex items-start justify-between">
+                                  <div className="flex-1">
+                                    <div className="flex items-center gap-2 md:gap-3 mb-2">
+                                      <span className={`text-3xl md:text-5xl ${medalColors[index]}`}>
+                                        {medalEmojis[index]}
+                                      </span>
+                                      <div>
+                                        <p className="text-xl md:text-3xl font-bold text-white leading-none">
+                                          {item.score}
+                                        </p>
+                                        <p className="text-white/60 text-xs md:text-sm font-medium">
+                                          votes
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <p className="text-framed-white font-semibold text-base md:text-xl mb-1">
+                                      {item.gameName}
+                                    </p>
+                                    <p className="text-white/75 text-xs md:text-sm">
+                                      by {item.author}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                              <picture>
+                                <img
+                                  loading="lazy"
+                                  className="rounded-lg object-cover w-full h-full"
+                                  alt={item.gameName}
+                                  src={`${item.thumbnailUrl}?width=800`}
+                                />
+                              </picture>
+                            </div>
+                          </a>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
