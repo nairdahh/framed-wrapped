@@ -818,7 +818,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                                     loading="lazy"
                                     className="rounded-lg w-full h-auto"
                                     alt={item.gameName}
-                                    src={`${item.thumbnailUrl}?width=800`}
+                                    src={item.shotUrl}
                                   />
                                 </picture>
                               </div>
@@ -892,7 +892,7 @@ export default function WrapYear(year: number, flavourText: { intro: any; top10s
                                         loading="lazy"
                                         className="rounded-lg object-cover w-full h-full"
                                         alt={item.gameName}
-                                        src={`${item.thumbnailUrl}?width=800`}
+                                        src={item.shotUrl}
                                       />
                                     </picture>
                                   </div>
